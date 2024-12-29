@@ -1,405 +1,39 @@
-from Graph import Graph
-from Selection import Selection
-from Node import Node
-
-from Aviao import Aviao
-from Carro import Carro
-from Barco import Barco
+from Map import Selection
+from Vehicles import Aviao, Barco, Carro
+from build import startGraph, startRecursos
 
 import random
+import subprocess
+import sys
+
+
+
+def install_requirements():
+    try:
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", "-r", "requirements.txt"],
+            stdout=subprocess.DEVNULL,  # Suppress standard output
+            stderr=subprocess.DEVNULL   # Suppress error output
+            )
+        print("[Dependências instaladas]\n\n")
+    except subprocess.CalledProcessError as e:
+        print(f"[Erro ao instalar dependências]: {e}\n\n")
+
 
 
 def main():
+        
+    install_requirements()
 
-    aviao = Aviao()
-    carro = Carro()
-    barco = Barco()
+    aviao = Aviao(45,80)
+    carro = Carro(100,100)
+    barco = Barco(65,50)
 
     selection = Selection()
 
-    recursos = {
-        "alcacer": 5,
-        "barcheta": 5,
-        "calles": 10,
-        "dos aguas": 5,
-        "enova": 15,
-        "fontanares": 10,
-        "gandia": 15,
-        "liria": 5,
-        "jarafuel": 5,
-        "luchente": 5,
-        "masamagrell": 5,
-        "oliva": 15,
-        "picaña": 5,
-        "requena": 5,
-        "rocafort": 15,
-        "serra": 10,
-        "torrente": 10,
-        "valencia": 10
-    }
+    gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo,gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo = startGraph()
+    recursos = startRecursos()
 
-    gBarco_climaBasico = Graph(recursos)
-    gBarco_climaRegular = Graph(recursos)
-    gBarco_climaExtremo = Graph(recursos)
-
-
-    gBarco_climaBasico.add_edge("serra", "rocafort", 10)
-    gBarco_climaBasico.add_edge("rocafort", "requena", 15)
-    gBarco_climaBasico.add_edge("requena", "picaña", 15)
-    gBarco_climaBasico.add_edge("picaña", "oliva", 10)
-
-    gBarco_climaRegular.add_edge("serra", "rocafort", 15)
-    gBarco_climaRegular.add_edge("rocafort", "requena", 20)
-    gBarco_climaRegular.add_edge("requena", "picaña", 20)
-    gBarco_climaRegular.add_edge("picaña", "oliva", 15)
-
-    gBarco_climaExtremo.add_edge("serra", "rocafort", 20)
-    gBarco_climaExtremo.add_edge("rocafort", "requena", 25)
-    gBarco_climaExtremo.add_edge("requena", "picaña", 25)
-    gBarco_climaExtremo.add_edge("picaña", "oliva", 20)
-
-
-
-
-
-    gCarro_climaBasico = Graph(recursos)
-    gCarro_climaRegular = Graph(recursos)
-    gCarro_climaExtremo = Graph(recursos)
-
-    gCarro_climaBasico.add_edge("fontanares", "gandia", 5)
-    gCarro_climaBasico.add_edge("fontanares", "liria", 4)
-    gCarro_climaBasico.add_edge("fontanares", "jarafuel", 7)
-    gCarro_climaBasico.add_edge("jarafuel", "serra", 3)
-    gCarro_climaBasico.add_edge("jarafuel", "torrente", 3)
-    gCarro_climaBasico.add_edge("jarafuel", "luchente", 3)
-    gCarro_climaBasico.add_edge("liria", "masamagrell", 4)
-    gCarro_climaBasico.add_edge("masamagrell", "oliva", 5)
-    gCarro_climaBasico.add_edge("masamagrell", "valencia", 3)
-    gCarro_climaBasico.add_edge("valencia", "picaña", 4)
-    gCarro_climaBasico.add_edge("torrente", "requena", 3)
-    gCarro_climaBasico.add_edge("torrente", "rocafort", 4)
-    gCarro_climaBasico.add_edge("luchente", "valencia", 5)
-    gCarro_climaBasico.add_edge("luchente", "masamagrell", 5)
-    gCarro_climaBasico.add_edge("masamagrell", "gandia", 4)
-
-    gCarro_climaRegular.add_edge("fontanares", "gandia", 10)
-    gCarro_climaRegular.add_edge("fontanares", "liria", 6)
-    gCarro_climaRegular.add_edge("fontanares", "jarafuel", 9)
-    gCarro_climaRegular.add_edge("jarafuel", "serra", 5)
-    gCarro_climaRegular.add_edge("jarafuel", "torrente", 5)
-    gCarro_climaRegular.add_edge("jarafuel", "luchente", 5)
-    gCarro_climaRegular.add_edge("liria", "masamagrell", 6)
-    gCarro_climaRegular.add_edge("masamagrell", "oliva", 6)
-    gCarro_climaRegular.add_edge("masamagrell", "valencia", 4)
-    gCarro_climaRegular.add_edge("valencia", "picaña", 6)
-    gCarro_climaRegular.add_edge("torrente", "requena", 5)
-    gCarro_climaRegular.add_edge("torrente", "rocafort", 5)
-    gCarro_climaRegular.add_edge("luchente", "valencia", 6)
-    gCarro_climaRegular.add_edge("luchente", "masamagrell", 6)
-    gCarro_climaRegular.add_edge("masamagrell", "gandia", 7)
-
-    gCarro_climaExtremo.add_edge("fontanares", "gandia", 15)
-    gCarro_climaExtremo.add_edge("fontanares", "liria", 7)
-    gCarro_climaExtremo.add_edge("fontanares", "jarafuel", 11)
-    gCarro_climaExtremo.add_edge("jarafuel", "serra", 7)
-    gCarro_climaExtremo.add_edge("jarafuel", "torrente", 6)
-    gCarro_climaExtremo.add_edge("jarafuel", "luchente", 7)
-    gCarro_climaExtremo.add_edge("liria", "masamagrell", 7)
-    gCarro_climaExtremo.add_edge("masamagrell", "oliva", 7)
-    gCarro_climaExtremo.add_edge("masamagrell", "valencia", 5)
-    gCarro_climaExtremo.add_edge("valencia", "picaña", 8)
-    gCarro_climaExtremo.add_edge("torrente", "requena", 9)
-    gCarro_climaExtremo.add_edge("torrente", "rocafort", 6)
-    gCarro_climaExtremo.add_edge("luchente", "valencia", 9)
-    gCarro_climaExtremo.add_edge("luchente", "masamagrell", 9)
-    gCarro_climaExtremo.add_edge("masamagrell", "gandia", 9)
-
-
-
-
-
-    gAviao_climaBasico = Graph(recursos)
-    gAviao_climaRegular = Graph(recursos)
-    gAviao_climaExtremo = Graph(recursos)
-
-    gAviao_climaBasico.add_edge("serra", "rocafort", 8)
-    gAviao_climaBasico.add_edge("rocafort", "requena", 13)
-    gAviao_climaBasico.add_edge("requena", "picaña", 13)
-    gAviao_climaBasico.add_edge("picaña", "oliva", 8)
-    gAviao_climaBasico.add_edge("fontanares", "gandia", 3)
-    gAviao_climaBasico.add_edge("fontanares", "liria", 2)
-    gAviao_climaBasico.add_edge("fontanares", "jarafuel", 5)
-    gAviao_climaBasico.add_edge("jarafuel", "serra", 1)
-    gAviao_climaBasico.add_edge("jarafuel", "torrente", 1)
-    gAviao_climaBasico.add_edge("jarafuel", "luchente", 1)
-    gAviao_climaBasico.add_edge("liria", "masamagrell", 2)
-    gAviao_climaBasico.add_edge("masamagrell", "oliva", 3)
-    gAviao_climaBasico.add_edge("masamagrell", "valencia", 1)
-    gAviao_climaBasico.add_edge("valencia", "picaña", 2)
-    gAviao_climaBasico.add_edge("torrente", "requena", 1)
-    gAviao_climaBasico.add_edge("torrente", "rocafort", 2)
-    gAviao_climaBasico.add_edge("fontanares", "barcheta", 1)
-    gAviao_climaBasico.add_edge("barcheta", "alcacer", 1)
-    gAviao_climaBasico.add_edge("alcacer", "dos aguas", 1)
-    gAviao_climaBasico.add_edge("dos aguas", "enova", 1)
-    gAviao_climaBasico.add_edge("enova", "calles", 1)
-    gAviao_climaBasico.add_edge("calles", "barcheta", 1)
-    gAviao_climaBasico.add_edge("gandia", "enova", 1)
-    gAviao_climaBasico.add_edge("luchente", "valencia", 3)
-    gAviao_climaBasico.add_edge("luchente", "masamagrell", 3)
-    gAviao_climaBasico.add_edge("masamagrell", "gandia", 2)
-
-    gAviao_climaRegular.add_edge("serra", "rocafort", 9)
-    gAviao_climaRegular.add_edge("rocafort", "requena", 14)
-    gAviao_climaRegular.add_edge("requena", "picaña", 14)
-    gAviao_climaRegular.add_edge("picaña", "oliva", 9)
-    gAviao_climaRegular.add_edge("fontanares", "gandia", 4)
-    gAviao_climaRegular.add_edge("fontanares", "liria", 3)
-    gAviao_climaRegular.add_edge("fontanares", "jarafuel", 6)
-    gAviao_climaRegular.add_edge("jarafuel", "serra", 2)
-    gAviao_climaRegular.add_edge("jarafuel", "torrente", 2)
-    gAviao_climaRegular.add_edge("jarafuel", "luchente", 2)
-    gAviao_climaRegular.add_edge("liria", "masamagrell", 3)
-    gAviao_climaRegular.add_edge("masamagrell", "oliva", 4)
-    gAviao_climaRegular.add_edge("masamagrell", "valencia", 2)
-    gAviao_climaRegular.add_edge("valencia", "picaña", 3)
-    gAviao_climaRegular.add_edge("torrente", "requena", 2)
-    gAviao_climaRegular.add_edge("torrente", "rocafort", 3)
-    gAviao_climaRegular.add_edge("fontanares", "barcheta", 2)
-    gAviao_climaRegular.add_edge("barcheta", "alcacer", 2)
-    gAviao_climaRegular.add_edge("alcacer", "dos aguas", 2)
-    gAviao_climaRegular.add_edge("dos aguas", "enova", 2)
-    gAviao_climaRegular.add_edge("enova", "calles", 2)
-    gAviao_climaRegular.add_edge("calles", "barcheta", 2)
-    gAviao_climaRegular.add_edge("gandia", "enova", 2)
-    gAviao_climaRegular.add_edge("luchente", "valencia", 4)
-    gAviao_climaRegular.add_edge("luchente", "masamagrell", 4)
-    gAviao_climaRegular.add_edge("masamagrell", "gandia", 3)
-
-    gAviao_climaExtremo.add_edge("serra", "rocafort", 10)
-    gAviao_climaExtremo.add_edge("rocafort", "requena", 15)
-    gAviao_climaExtremo.add_edge("requena", "picaña", 15)
-    gAviao_climaExtremo.add_edge("picaña", "oliva", 10)
-    gAviao_climaExtremo.add_edge("fontanares", "gandia", 5)
-    gAviao_climaExtremo.add_edge("fontanares", "liria", 4)
-    gAviao_climaExtremo.add_edge("fontanares", "jarafuel", 7)
-    gAviao_climaExtremo.add_edge("jarafuel", "serra", 3)
-    gAviao_climaExtremo.add_edge("jarafuel", "torrente", 3)
-    gAviao_climaExtremo.add_edge("jarafuel", "luchente", 3)
-    gAviao_climaExtremo.add_edge("liria", "masamagrell", 4)
-    gAviao_climaExtremo.add_edge("masamagrell", "oliva", 5)
-    gAviao_climaExtremo.add_edge("masamagrell", "valencia", 3)
-    gAviao_climaExtremo.add_edge("valencia", "picaña", 4)
-    gAviao_climaExtremo.add_edge("torrente", "requena", 3)
-    gAviao_climaExtremo.add_edge("torrente", "rocafort", 4)
-    gAviao_climaExtremo.add_edge("fontanares", "barcheta", 3)
-    gAviao_climaExtremo.add_edge("barcheta", "alcacer", 3)
-    gAviao_climaExtremo.add_edge("alcacer", "dos aguas", 3)
-    gAviao_climaExtremo.add_edge("dos aguas", "enova", 3)
-    gAviao_climaExtremo.add_edge("enova", "calles", 3)
-    gAviao_climaExtremo.add_edge("calles", "barcheta", 3)
-    gAviao_climaExtremo.add_edge("gandia", "enova", 3)
-    gAviao_climaExtremo.add_edge("luchente", "valencia", 5)
-    gAviao_climaExtremo.add_edge("luchente", "masamagrell", 5)
-    gAviao_climaExtremo.add_edge("masamagrell", "gandia", 4)
-
-
-    gBarco_climaBasico.add_heuristica("alcacer", 3)
-    gBarco_climaRegular.add_heuristica("alcacer", 3)
-    gBarco_climaExtremo.add_heuristica("alcacer", 3)
-    gCarro_climaBasico.add_heuristica("alcacer", 3)
-    gCarro_climaRegular.add_heuristica("alcacer", 3)
-    gCarro_climaExtremo.add_heuristica("alcacer", 3)
-    gAviao_climaBasico.add_heuristica("alcacer", 3)
-    gAviao_climaRegular.add_heuristica("alcacer", 3)
-    gAviao_climaExtremo.add_heuristica("alcacer", 3)
-
-
-    gBarco_climaBasico.add_heuristica("barcheta", 3)
-    gBarco_climaRegular.add_heuristica("barcheta", 3)
-    gBarco_climaExtremo.add_heuristica("barcheta", 3)
-    gCarro_climaBasico.add_heuristica("barcheta", 3)
-    gCarro_climaRegular.add_heuristica("barcheta", 3)
-    gCarro_climaExtremo.add_heuristica("barcheta", 3)
-    gAviao_climaBasico.add_heuristica("barcheta", 3)
-    gAviao_climaRegular.add_heuristica("barcheta", 3)
-    gAviao_climaExtremo.add_heuristica("barcheta", 3)
-
-
-    gBarco_climaBasico.add_heuristica("calles", 2)
-    gBarco_climaRegular.add_heuristica("calles", 2)
-    gBarco_climaExtremo.add_heuristica("calles", 2)
-    gCarro_climaBasico.add_heuristica("calles", 2)
-    gCarro_climaRegular.add_heuristica("calles", 2)
-    gCarro_climaExtremo.add_heuristica("calles", 2)
-    gAviao_climaBasico.add_heuristica("calles", 2)
-    gAviao_climaRegular.add_heuristica("calles", 2)
-    gAviao_climaExtremo.add_heuristica("calles", 2)
-
-
-    gBarco_climaBasico.add_heuristica("dos aguas", 5)
-    gBarco_climaRegular.add_heuristica("dos aguas", 5)
-    gBarco_climaExtremo.add_heuristica("dos aguas", 5)
-    gCarro_climaBasico.add_heuristica("dos aguas", 5)
-    gCarro_climaRegular.add_heuristica("dos aguas", 5)
-    gCarro_climaExtremo.add_heuristica("dos aguas", 5)
-    gAviao_climaBasico.add_heuristica("dos aguas", 5)
-    gAviao_climaRegular.add_heuristica("dos aguas", 5)
-    gAviao_climaExtremo.add_heuristica("dos aguas", 5)
-
-
-    gBarco_climaBasico.add_heuristica("enova", 2)
-    gBarco_climaRegular.add_heuristica("enova", 2)
-    gBarco_climaExtremo.add_heuristica("enova", 2)
-    gCarro_climaBasico.add_heuristica("enova", 2)
-    gCarro_climaRegular.add_heuristica("enova", 2)
-    gCarro_climaExtremo.add_heuristica("enova", 2)
-    gAviao_climaBasico.add_heuristica("enova", 2)
-    gAviao_climaRegular.add_heuristica("enova", 2)
-    gAviao_climaExtremo.add_heuristica("enova", 2)
-
-
-    gBarco_climaBasico.add_heuristica("fontanares", 2)
-    gBarco_climaRegular.add_heuristica("fontanares", 2)
-    gBarco_climaExtremo.add_heuristica("fontanares", 2)
-    gCarro_climaBasico.add_heuristica("fontanares", 2)
-    gCarro_climaRegular.add_heuristica("fontanares", 2)
-    gCarro_climaExtremo.add_heuristica("fontanares", 2)
-    gAviao_climaBasico.add_heuristica("fontanares", 2)
-    gAviao_climaRegular.add_heuristica("fontanares", 2)
-    gAviao_climaExtremo.add_heuristica("fontanares", 2)
-
-
-    gBarco_climaBasico.add_heuristica("gandia", 3)
-    gBarco_climaRegular.add_heuristica("gandia", 3)
-    gBarco_climaExtremo.add_heuristica("gandia", 3)
-    gCarro_climaBasico.add_heuristica("gandia", 3)
-    gCarro_climaRegular.add_heuristica("gandia", 3)
-    gCarro_climaExtremo.add_heuristica("gandia", 3)
-    gAviao_climaBasico.add_heuristica("gandia", 3)
-    gAviao_climaRegular.add_heuristica("gandia", 3)
-    gAviao_climaExtremo.add_heuristica("gandia", 3)
-
-
-    gBarco_climaBasico.add_heuristica("liria", 4)
-    gBarco_climaRegular.add_heuristica("liria", 4)
-    gBarco_climaExtremo.add_heuristica("liria", 4)
-    gCarro_climaBasico.add_heuristica("liria", 4)
-    gCarro_climaRegular.add_heuristica("liria", 4)
-    gCarro_climaExtremo.add_heuristica("liria", 4)
-    gAviao_climaBasico.add_heuristica("liria", 4)
-    gAviao_climaRegular.add_heuristica("liria", 4)
-    gAviao_climaExtremo.add_heuristica("liria", 4)
-
-
-    gBarco_climaBasico.add_heuristica("jarafuel", 3)
-    gBarco_climaRegular.add_heuristica("jarafuel", 3)
-    gBarco_climaExtremo.add_heuristica("jarafuel", 3)
-    gCarro_climaBasico.add_heuristica("jarafuel", 3)
-    gCarro_climaRegular.add_heuristica("jarafuel", 3)
-    gCarro_climaExtremo.add_heuristica("jarafuel", 3)
-    gAviao_climaBasico.add_heuristica("jarafuel", 3)
-    gAviao_climaRegular.add_heuristica("jarafuel", 3)
-    gAviao_climaExtremo.add_heuristica("jarafuel", 3)
-
-
-    gBarco_climaBasico.add_heuristica("luchente", 2)
-    gBarco_climaRegular.add_heuristica("luchente", 2)
-    gBarco_climaExtremo.add_heuristica("luchente", 2)
-    gCarro_climaBasico.add_heuristica("luchente", 2)
-    gCarro_climaRegular.add_heuristica("luchente", 2)
-    gCarro_climaExtremo.add_heuristica("luchente", 2)
-    gAviao_climaBasico.add_heuristica("luchente", 2)
-    gAviao_climaRegular.add_heuristica("luchente", 2)
-    gAviao_climaExtremo.add_heuristica("luchente", 2)
-
-
-    gBarco_climaBasico.add_heuristica("masamagrell", 3)
-    gBarco_climaRegular.add_heuristica("masamagrell", 3)
-    gBarco_climaExtremo.add_heuristica("masamagrell", 3)
-    gCarro_climaBasico.add_heuristica("masamagrell", 3)
-    gCarro_climaRegular.add_heuristica("masamagrell", 3)
-    gCarro_climaExtremo.add_heuristica("masamagrell", 3)
-    gAviao_climaBasico.add_heuristica("masamagrell", 3)
-    gAviao_climaRegular.add_heuristica("masamagrell", 3)
-    gAviao_climaExtremo.add_heuristica("masamagrell", 3)
-
-
-    gBarco_climaBasico.add_heuristica("oliva", 2)
-    gBarco_climaRegular.add_heuristica("oliva", 2)
-    gBarco_climaExtremo.add_heuristica("oliva", 2)
-    gCarro_climaBasico.add_heuristica("oliva", 2)
-    gCarro_climaRegular.add_heuristica("oliva", 2)
-    gCarro_climaExtremo.add_heuristica("oliva", 2)
-    gAviao_climaBasico.add_heuristica("oliva", 2)
-    gAviao_climaRegular.add_heuristica("oliva", 2)
-    gAviao_climaExtremo.add_heuristica("oliva", 2)
-
-
-    gBarco_climaBasico.add_heuristica("picaña", 3)
-    gBarco_climaRegular.add_heuristica("picaña", 3)
-    gBarco_climaExtremo.add_heuristica("picaña", 3)
-    gCarro_climaBasico.add_heuristica("picaña", 3)
-    gCarro_climaRegular.add_heuristica("picaña", 3)
-    gCarro_climaExtremo.add_heuristica("picaña", 3)
-    gAviao_climaBasico.add_heuristica("picaña", 3)
-    gAviao_climaRegular.add_heuristica("picaña", 3)
-    gAviao_climaExtremo.add_heuristica("picaña", 3)
-
-
-    gBarco_climaBasico.add_heuristica("requena", 3)
-    gBarco_climaRegular.add_heuristica("requena", 3)
-    gBarco_climaExtremo.add_heuristica("requena", 3)
-    gCarro_climaBasico.add_heuristica("requena", 3)
-    gCarro_climaRegular.add_heuristica("requena", 3)
-    gCarro_climaExtremo.add_heuristica("requena", 3)
-    gAviao_climaBasico.add_heuristica("requena", 3)
-    gAviao_climaRegular.add_heuristica("requena", 3)
-    gAviao_climaExtremo.add_heuristica("requena", 3)
-
-
-    gBarco_climaBasico.add_heuristica("rocafort", 3)
-    gBarco_climaRegular.add_heuristica("rocafort", 3)
-    gBarco_climaExtremo.add_heuristica("rocafort", 3)
-    gCarro_climaBasico.add_heuristica("rocafort", 3)
-    gCarro_climaRegular.add_heuristica("rocafort", 3)
-    gCarro_climaExtremo.add_heuristica("rocafort", 3)
-    gAviao_climaBasico.add_heuristica("rocafort", 3)
-    gAviao_climaRegular.add_heuristica("rocafort", 3)
-    gAviao_climaExtremo.add_heuristica("rocafort", 3)
-
-
-    gBarco_climaBasico.add_heuristica("serra", 3)
-    gBarco_climaRegular.add_heuristica("serra", 3)
-    gBarco_climaExtremo.add_heuristica("serra", 3)
-    gCarro_climaBasico.add_heuristica("serra", 3)
-    gCarro_climaRegular.add_heuristica("serra", 3)
-    gCarro_climaExtremo.add_heuristica("serra", 3)
-    gAviao_climaBasico.add_heuristica("serra", 3)
-    gAviao_climaRegular.add_heuristica("serra", 3)
-    gAviao_climaExtremo.add_heuristica("serra", 3)
-
-
-    gBarco_climaBasico.add_heuristica("torrente", 4)
-    gBarco_climaRegular.add_heuristica("torrente", 4)
-    gBarco_climaExtremo.add_heuristica("torrente", 4)
-    gCarro_climaBasico.add_heuristica("torrente", 4)
-    gCarro_climaRegular.add_heuristica("torrente", 4)
-    gCarro_climaExtremo.add_heuristica("torrente", 4)
-    gAviao_climaBasico.add_heuristica("torrente", 4)
-    gAviao_climaRegular.add_heuristica("torrente", 4)
-    gAviao_climaExtremo.add_heuristica("torrente", 4)
-
-
-    gBarco_climaBasico.add_heuristica("valencia", 3)
-    gBarco_climaRegular.add_heuristica("valencia", 3)
-    gBarco_climaExtremo.add_heuristica("valencia", 3)
-    gCarro_climaBasico.add_heuristica("valencia", 3)
-    gCarro_climaRegular.add_heuristica("valencia", 3)
-    gCarro_climaExtremo.add_heuristica("valencia", 3)
-    gAviao_climaBasico.add_heuristica("valencia", 3)
-    gAviao_climaRegular.add_heuristica("valencia", 3)
-    gAviao_climaExtremo.add_heuristica("valencia", 3)
 
     gBasico = [gAviao_climaBasico, gCarro_climaBasico, gBarco_climaBasico]
     gRegular = [gAviao_climaRegular, gCarro_climaRegular, gBarco_climaRegular]
@@ -499,14 +133,14 @@ def main():
                 fim = input("Nodo final->")
                 
                 if g[0].getH(fim) > 0: #so vamos ir ao nodo fim se ainda esta disponivel
-                    if posiçõesAtuais["Avião"] != None: resAviao = g[0].procura_BFS(posiçõesAtuais["Avião"], fim, path=[], visited=set())
-                    else: resAviao = g[0].procura_BFS(inicio, fim, path=[], visited=set())
+                    if posiçõesAtuais["Avião"] != None: resAviao = g[0].procura_BFS(posiçõesAtuais["Avião"], fim)
+                    else: resAviao = g[0].procura_BFS(inicio, fim)
 
-                    if posiçõesAtuais["Carro"] != None: resCarro = g[1].procura_BFS(posiçõesAtuais["Carro"], fim, path=[], visited=set())
-                    else: resCarro = g[1].procura_BFS(inicio, fim, path=[], visited=set())
+                    if posiçõesAtuais["Carro"] != None: resCarro = g[1].procura_BFS(posiçõesAtuais["Carro"], fim)
+                    else: resCarro = g[1].procura_BFS(inicio, fim)
                     
-                    if posiçõesAtuais["Barco"] != None: resBarco = g[2].procura_BFS(posiçõesAtuais["Barco"], fim, path=[], visited=set())
-                    else: resBarco = g[2].procura_BFS(inicio, fim, path=[], visited=set())
+                    if posiçõesAtuais["Barco"] != None: resBarco = g[2].procura_BFS(posiçõesAtuais["Barco"], fim)
+                    else: resBarco = g[2].procura_BFS(inicio, fim)
 
                     check = False
                 else:
@@ -583,11 +217,11 @@ def main():
 
             else:
                 print("Atualmente ninhum dos vehiculos consegue fazer a viagem seja por causa da gasolina ou recursos, vão ser restaurado os recursos e gasolina dos vehiculos")
-                aviao.restauraCapacidade()
+                aviao.restauraRecursos()
                 aviao.restauraGasolina()
-                carro.restauraCapacidade()
+                carro.restauraRecursos()
                 carro.restauraGasolina()
-                barco.restauraCapacidade()
+                barco.restauraRecursos()
                 barco.restauraGasolina()
 
 
