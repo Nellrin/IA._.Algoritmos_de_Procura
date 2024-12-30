@@ -1,8 +1,6 @@
 from Map import Graph
 
 
-
-
 def startRecursos():
     return {
         "alcacer": 5,
@@ -165,4 +163,4 @@ def startGraph():
     gAviao_climaExtremo = build(recursos,combine_edges(edgesAviao,cAviaoClimaExtremo),heuristicas)
 
 
-    return gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo,gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo,gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo
+    return gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo,gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo

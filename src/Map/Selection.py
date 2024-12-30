@@ -1,5 +1,3 @@
-from Vehicles import Aviao, Barco, Carro
-
 class Selection:            
 
     def atualiza_cidades(self, listaTotal, cidades_visitadas):
