@@ -33,8 +33,6 @@ def procura_BFS(self, start, end):
                     parent[adjacente] = nodo_atual
                     visited.add(adjacente)
 
-
-
     # Reconstruir o caminho
 
     path = []

@@ -1,12 +1,9 @@
-from Map import Selection
+from Map import Selection, startGraph, startRecursos
 from Vehicles import Aviao, Barco, Carro
-from build import startGraph, startRecursos
 
 import random
 import subprocess
 import sys
-
-
 
 def install_requirements():
     try:
@@ -31,7 +28,7 @@ def main():
 
     selection = Selection()
 
-    gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo,gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo = startGraph()
+    gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo,gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo = startGraph()
     recursos = startRecursos()
 
 
