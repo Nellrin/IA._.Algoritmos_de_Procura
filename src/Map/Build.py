@@ -125,10 +125,10 @@ def build(recursos,edges,heuristicas):
 
 
 
-def startGraph():
+def startGraph(recursosX, heuristicasX):
         
-    recursos = startRecursos()
-    heuristicas = startHeuristicas()
+    recursos = recursosX
+    heuristicas = heuristicasX
     
 
     edgesBarco = startEdgesBarco()
