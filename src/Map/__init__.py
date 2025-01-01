@@ -1,3 +1,3 @@
 from .GraphRevamped import Graph
 from .Selection import Selection
-from .Build import startGraph, startRecursos
+from .Build import startGraph, startRecursos, startHeuristicas
