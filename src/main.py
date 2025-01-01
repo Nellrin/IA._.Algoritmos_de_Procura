@@ -23,9 +23,9 @@ def main():
         
     install_requirements()
 
-    aviao = Aviao(45,30)
-    carro = Carro(100,30)
-    barco = Barco(65,30)
+    aviao = Aviao(45,80)
+    carro = Carro(65,50)
+    barco = Barco(100,100)
 
     selection = Selection()
 
