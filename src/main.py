@@ -1,6 +1,8 @@
 from Map import Selection, startGraph, startRecursos, startHeuristicas
 from Vehicles import Aviao, Barco, Carro
 from time import sleep
+import os
+import platform
 
 import random
 import subprocess
@@ -17,7 +19,12 @@ def install_requirements():
     except subprocess.CalledProcessError as e:
         print(f"[Erro ao instalar dependências]: {e}\n\n")
 
-
+def clear():
+    system_name = platform.system().lower()
+    if system_name == 'windows':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def main():
         
@@ -95,6 +102,9 @@ def main():
 
 
         saida = int(input("\033[1m[Introduza a sua opcao]:\033[0m "))
+        
+        clear()
+
         if saida == 0:
             print('\033[1m==================================================================\033[0m')
             print("Saindo...")
@@ -108,7 +118,9 @@ def main():
             sleep(0.1)
         elif saida == 2:
             saida_grafo = -1
+            
             while saida_grafo != 0:
+                clear()
                 print('\033[1m==================================================================\033[0m')
                 print("\033[1m(1)\033[0m Grafo dos Aviões")
                 print("\033[1m(2)\033[0m Grafo dos Carros")
