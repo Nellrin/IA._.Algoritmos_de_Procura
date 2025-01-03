@@ -12,8 +12,12 @@ class Veiculo:
     def getRecursos(self):
         return self.recursosAtuais
 
-    def restauraGasolina(self):
-        self.gasolinaAtual = self.capacidadeDeGasolina
+    def restauraGasolina(self, quantidade):
+        aSerDepositado = min(self.capacidadeDeGasolina - self.gasolinaAtual, quantidade)
+        
+        self.gasolinaAtual += aSerDepositado
+
+        return aSerDepositado
 
     def restauraRecursos(self):
         self.recursosAtuais = self.capacidadeDeRecursos

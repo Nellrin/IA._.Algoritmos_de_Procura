@@ -21,8 +21,8 @@ def imprime_aresta(self):
     lista = self.m_graph.keys()
     for nodo in lista:
         for (nodo2, custo) in self.m_graph[nodo]:
-            listaA = listaA + nodo + " ->" + nodo2 + " custo:" + str(custo) + "\n"
-    return listaA
+            listaA = listaA + "(" + nodo.rjust(11) + " -> " + nodo2.ljust(11) + ") {" + str(custo).rjust(2) + "}\n"
+    return listaA[:-1]
 
 ###############################
 #  Desenha grafo  modo grafico
