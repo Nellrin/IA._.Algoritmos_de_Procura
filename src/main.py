@@ -23,15 +23,15 @@ def main():
         
     install_requirements()
 
-    aviao = Aviao(45,30)
-    carro = Carro(100,30)
-    barco = Barco(65,30)
+    aviao = Aviao(45,80)
+    carro = Carro(65,50)
+    barco = Barco(100,100)
 
     selection = Selection()
 
-    recursos = startRecursos()
+    recursosDeCadaCidade = startRecursos()
     heuristicas = startHeuristicas()
-    gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo,gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo = startGraph(recursos,heuristicas)
+    gAviao_climaBasico,gAviao_climaRegular,gAviao_climaExtremo,gBarco_climaBasico,gBarco_climaRegular,gBarco_climaExtremo,gCarro_climaBasico, gCarro_climaRegular,gCarro_climaExtremo = startGraph(recursosDeCadaCidade,heuristicas)
 
 
     gBasico = [gAviao_climaBasico, gCarro_climaBasico, gBarco_climaBasico]
@@ -39,6 +39,8 @@ def main():
     gExtremo = [gAviao_climaExtremo, gCarro_climaExtremo, gBarco_climaExtremo]
 
     cidadesVisitadas = []
+
+    
 
     numAleatorio = random.randint(0, 2)
 
@@ -51,86 +53,156 @@ def main():
         case 2:
             g = gExtremo
 
+
+    GasolinaDisponivel = 300 + carro.getGasolina() + aviao.getGasolina() + barco.getGasolina()
+    RecursosDisponiveis = 200 + carro.getRecursos() + aviao.getRecursos() + barco.getRecursos()
+
+    GasolinaInicial = GasolinaDisponivel
+    RecursosInicial = RecursosDisponiveis
+    
+
+    recursosPedidosInicialmente = 0
+    for recursos in g[0].m_recursos.values():
+        recursosPedidosInicialmente += recursos
+
+
     posiçõesAtuais = {
         "Avião": None,
         "Carro": None,
         "Barco": None,
     }
 
+    GasolinaComoCriterioDeDecisao = True
+
     saida = -1
     while saida != 0:
 
-        print('==================================================================')
-        print("( 0) Saír")
-        print("( 1) Imprimir Grafo")
-        print("( 2) Desenhar Grafo")
-        print("( 3) Imprimir nodos do Grafo")
-        print("( 4) Imprimir arestas do Grafo")
-        print("( 5) Ver Recursos requisitados pelas cidades")
-        print("( 6) Ver Tempo de vida restante das cidades")
-        print("( 7) Procura DFS")
-        print("( 8) Procura BFS")
-        print("( 9) Procura A*")
-        print("(10) Procura Gulosa")
-        print('==================================================================\n')
+        print('\033[1m==================================================================\033[0m')
+        print("\033[1m( 0)\033[0m Saír")
+        print("\033[1m( 1)\033[0m Imprimir Grafo")
+        print("\033[1m( 2)\033[0m Desenhar Grafo")
+        print("\033[1m( 3)\033[0m Imprimir nodos do Grafo")
+        print("\033[1m( 4)\033[0m Imprimir arestas do Grafo")
+        print("\033[1m( 5)\033[0m Ver Recursos Requisitados pelas cidades")
+        print("\033[1m( 6)\033[0m Ver Tempo de Vida restante das cidades")
+        print("\033[1m( 7)\033[0m Ver Estatísticas")
+        print("\033[1m( 8)\033[0m Definir o Critério de Decisão")
+        print("\033[1m( 9)\033[0m Procura DFS")
+        print("\033[1m(10)\033[0m Procura BFS")
+        print("\033[1m(11)\033[0m Procura A*")
+        print("\033[1m(12)\033[0m Procura Gulosa")
+        print('\033[1m==================================================================\n\033[0m')
 
 
-        saida = int(input("[introduza a sua opcao]: "))
+        saida = int(input("\033[1m[Introduza a sua opcao]:\033[0m "))
         if saida == 0:
-            print('==================================================================')
-            print("saindo...")
-            print('==================================================================\n')
+            print('\033[1m==================================================================\033[0m')
+            print("Saindo...")
+            print('\033[1m==================================================================\n\033[0m')
         elif saida == 1:
-            print('==================================================================')
+            print('\033[1m==================================================================\033[0m')
+            print('\033[1mOrigem\033[0m: [(\033[1mVizinho1\033[0m, \033[1mCusto1\033[0m), ... , (\033[1mVizinhoN\033[0m, \033[1mCustoN\033[0m)]\n')
             print(g[0].m_graph) #selecionamos o grafo dos aviões que é o maior/global o mapa
-            print('==================================================================\n')
+            print('\033[1m==================================================================\n\033[0m')
 
-            sleep(0.5)
+            sleep(0.1)
         elif saida == 2:
             saida_grafo = -1
             while saida_grafo != 0:
-                print('==================================================================')
-                print("(1) Grafo dos Aviões")
-                print("(2) Grafo dos Carros")
-                print("(3) Grafo dos Barcos")
-                print("\n(0) Sair")
-                print('==================================================================\n')
-                saida_grafo = int(input("introduza a sua opcao-> "))
+                print('\033[1m==================================================================\033[0m')
+                print("\033[1m(1)\033[0m Grafo dos Aviões")
+                print("\033[1m(2)\033[0m Grafo dos Carros")
+                print("\033[1m(3)\033[0m Grafo dos Barcos")
+                print("\n\033[1m(0)\033[0m Sair")
+                print('\033[1m==================================================================\n\033[0m')
+                saida_grafo = int(input("\033[1m[Introduza a sua opcao]:\033[0m "))
 
                 if saida_grafo == 1: g[0].desenha()
                 elif saida_grafo == 2: g[1].desenha()
                 elif saida_grafo == 3: g[2].desenha()
                 elif saida_grafo == 0: saida_grafo = 0
         elif saida == 3:
-            print('==================================================================')
-            print(g[0].m_graph.keys())
-            print('==================================================================\n')
-            sleep(0.5)
+            print('\033[1m==================================================================\033[0m')
+            print(list(g[0].m_graph.keys()))
+            print('\033[1m==================================================================\n\033[0m')
+            sleep(0.1)
         elif saida == 4:
-            print('==================================================================')
+            print('\033[1m==================================================================\033[0m')
+            print('(\033[1mCidadeA\033[0m -> \033[1mCidadeB\033[0m) {\033[1mCusto\033[0m}\n')
             print(g[0].imprime_aresta())
-            print('==================================================================\n')
-            sleep(0.5)
+            print('\033[1m==================================================================\n\033[0m')
+            sleep(0.1)
         elif saida == 5:
-            print('==================================================================')
+            print('\033[1m==================================================================\033[0m')
+            print('{\033[1mCidade\033[0m: \033[1mRecursos Requisitados\033[0m}\n')
             print(g[0].m_recursos)
-            print('==================================================================\n')
-            sleep(0.5)
+            print('\033[1m==================================================================\n\033[0m')
+            sleep(0.1)
 
         elif saida == 6:
-            print('==================================================================')
+            print('\033[1m==================================================================\033[0m')
+            print('{\033[1mCidade\033[0m: \033[1mTempo de Vida\033[0m}\n')
             print(g[0].m_h)
-            print('==================================================================\n')
-            sleep(0.5)
-                    
+            print('\033[1m==================================================================\n\033[0m')
+            sleep(0.1)
+
         elif saida == 7:
+
+            listaTiposDeCidadesEmRisco = [0,0,0,0,0,0,0]
+            recursosAtendidos = recursosPedidosInicialmente
+            
+            for cidades in (g[0].m_graph.keys()):
+                listaTiposDeCidadesEmRisco[0] += 1
+                recursosAtendidos -= g[0].m_recursos[cidades]
+
+                if g[0].m_recursos[cidades] == 0: listaTiposDeCidadesEmRisco[1] += 1
+                elif g[0].m_h[cidades] == 0:      listaTiposDeCidadesEmRisco[2] += 1
+                elif g[0].m_h[cidades] <= 2:      listaTiposDeCidadesEmRisco[3] += 1
+                elif g[0].m_h[cidades] == 3:      listaTiposDeCidadesEmRisco[4] += 1
+                elif g[0].m_h[cidades] == 4:      listaTiposDeCidadesEmRisco[5] += 1
+                elif g[0].m_h[cidades] == 5:      listaTiposDeCidadesEmRisco[6] += 1
+
+            print('\033[1m==================================================================\033[0m')
+            print(f"                Recursos Disponíveis: \033[1m[{RecursosDisponiveis}/{RecursosInicial}]\033[0m   \033[1m({((100*RecursosDisponiveis)/RecursosInicial):.2f}%)\033[0m")
+            print(f"                 Gasolina Disponível: \033[1m[{GasolinaDisponivel}/{GasolinaInicial}]\033[0m   \033[1m({((100*GasolinaDisponivel)/GasolinaInicial):.2f}%)\033[0m\n")
+            print(f"     Recursos Requisitados Entregues: \033[1m[{recursosAtendidos}/{recursosPedidosInicialmente}]\033[0m   \033[1m({((100*recursosAtendidos)/recursosPedidosInicialmente):.2f}%)\033[0m")
+            print(f"                  Cidades Socorridas: \033[1m[{listaTiposDeCidadesEmRisco[1]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[1]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
+            print(f"                    Cidades Perdidas: \033[1m[{listaTiposDeCidadesEmRisco[2]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[2]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m\n")
+            print(f"         Cidades em Estado Emergente: \033[1m[{listaTiposDeCidadesEmRisco[6]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[6]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
+            print(f"           Cidades em Estado Estável: \033[1m[{listaTiposDeCidadesEmRisco[5]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[5]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
+            print(f"         Cidades em Estado Alarmante: \033[1m[{listaTiposDeCidadesEmRisco[4]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[4]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
+            print(f"           Cidades em Estado Crítico: \033[1m[{listaTiposDeCidadesEmRisco[3]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[3]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
+            print('\033[1m==================================================================\n\033[0m')
+
+            sleep(0.1)
+
+        elif saida == 8:
+
+            opcaoGasolina = "(1) Menor quantidade de Gasolina Gasta"
+            opcaoRecursos = "(2) Maior quantidade de Recursos Distribuidos"
+
+            if GasolinaComoCriterioDeDecisao: opcaoGasolina = f"\033[1m{opcaoGasolina}\033[0m"
+            else:                             opcaoRecursos = f"\033[1m{opcaoRecursos}\033[0m"
+
+            print('\033[1m==================================================================\033[0m')
+            print('Qual deve ser o Critério de Decisão caso mais de um veículo')
+            print('seja capaz de efetuar a viagem proposta?\n')
+            print(f"         {opcaoGasolina}")
+            print(f"         {opcaoRecursos}\n")
+            
+            saida_CD = int(input("\033[1m[Introduza a sua opcao]:\033[0m "))
+
+            if saida_CD == 1: GasolinaComoCriterioDeDecisao = True
+            elif saida_CD == 2: GasolinaComoCriterioDeDecisao = False
+
+        elif saida == 9:
 
             check = True
             while (check):
-                print('==================================================================')
-                inicio = input("Este só será usado na primeira viagem\n[Nodo inicial]: ")
-                fim =    input("  [Nodo final]: ")
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                inicio = input("Este só será usado na primeira viagem\n\033[1m[Nodo Inicial]:\033[0m ")
+                fim =    input("  \033[1m[Nodo final]:\033[0m ")
+                print('\033[1m==================================================================\n\033[0m')
                 
                 if g[0].getH(fim) > 0: #so vamos ir ao nodo fim se ainda esta disponivel
                     # Definir las tres posibles opciones
@@ -147,21 +219,21 @@ def main():
                 else:
 
 
-                    print('==================================================================')
-                    print("Não se encontra disponível a cidade que pretende alcançar.")
+                    print('\033[1m==================================================================\033[0m')
+                    print("A cidade que pretende alcançar não se encontra disponível.")
                     print("Insira um novo destino")
-                    print('==================================================================\n')
+                    print('\033[1m==================================================================\n\033[0m')
 
-            (melhor_path, melhor_custo, melhor_vehiculo) = selection.selecionaTheBest(resAviao, resCarro, resBarco, aviao, carro, barco, recursos, heuristicas)
-            
-        elif saida == 8:
+            (melhor_path, melhor_custo, recursosgastos, melhor_vehiculo) = selection.selecionaTheBest(GasolinaComoCriterioDeDecisao, resAviao, resCarro, resBarco, aviao, carro, barco, recursosDeCadaCidade, heuristicas)
+
+        elif saida == 10:
 
             check = True
             while (check):
-                print('==================================================================')
-                inicio = input("Este só será usado na primeira viagem\n[Nodo inicial]: ")
-                fim =    input("  [Nodo final]: ")
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                inicio = input("Este só será usado na primeira viagem\n\033[1m[Nodo Inicial]:\033[0m ")
+                fim =    input("  \033[1m[Nodo final]:\033[0m ")
+                print('\033[1m==================================================================\n\033[0m')
 
                 
                 if g[0].getH(fim) > 0: #so vamos ir ao nodo fim se ainda esta disponivel
@@ -176,23 +248,23 @@ def main():
 
                     check = False
                 else:
-                    print('==================================================================')
-                    print("Não se encontra disponível a cidade que pretende alcançar.")
+                    print('\033[1m==================================================================\033[0m')
+                    print("A cidade que pretende alcançar não se encontra disponível.")
                     print("Insira um novo destino")
-                    print('==================================================================\n')
+                    print('\033[1m==================================================================\n\033[0m')
 
-            (melhor_path, melhor_custo, melhor_vehiculo) = selection.selecionaTheBest(resAviao, resCarro, resBarco, aviao, carro, barco, recursos,heuristicas)
+            (melhor_path, melhor_custo, recursosgastos, melhor_vehiculo) = selection.selecionaTheBest(GasolinaComoCriterioDeDecisao, resAviao, resCarro, resBarco, aviao, carro, barco, recursosDeCadaCidade,heuristicas)
         
         
-        elif saida == 9:
+        elif saida == 11:
 
             check = True
             while (check):
                 
-                print('==================================================================')
-                inicio = input("Este só será usado na primeira viagem\n[Nodo inicial]: ")
-                fim =    input("  [Nodo final]: ")
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                inicio = input("Este só será usado na primeira viagem\n\033[1m[Nodo Inicial]:\033[0m ")
+                fim =    input("  \033[1m[Nodo final]:\033[0m ")
+                print('\033[1m==================================================================\n\033[0m')
 
                 if g[0].getH(fim) > 0: #so vamos ir ao nodo fim se ainda esta disponivel
                     if posiçõesAtuais["Avião"] != None: resAviao = g[0].procura_aStar(posiçõesAtuais["Avião"], fim)
@@ -208,24 +280,24 @@ def main():
                     check = False
                 
                 else:
-                    print('==================================================================')
-                    print("Não se encontra disponível a cidade que pretende alcançar.")
+                    print('\033[1m==================================================================\033[0m')
+                    print("A cidade que pretende alcançar não se encontra disponível.")
                     print("Insira um novo destino")
-                    print('==================================================================\n')
+                    print('\033[1m==================================================================\n\033[0m')
 
             
-            (melhor_path, melhor_custo, melhor_vehiculo) = selection.selecionaTheBest(resAviao, resCarro, resBarco, aviao, carro, barco, recursos,heuristicas)
+            (melhor_path, melhor_custo, recursosgastos, melhor_vehiculo) = selection.selecionaTheBest(GasolinaComoCriterioDeDecisao, resAviao, resCarro, resBarco, aviao, carro, barco, recursosDeCadaCidade,heuristicas)
 
 
-        elif saida == 10:
+        elif saida == 12:
 
             check = True
             while (check):
 
-                print('==================================================================')
-                inicio = input("Este só será usado na primeira viagem\n[Nodo inicial]: ")
-                fim =    input("  [Nodo final]: ")
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                inicio = input("Este só será usado na primeira viagem\n\033[1m[Nodo Inicial]:\033[0m ")
+                fim =    input("  \033[1m[Nodo final]:\033[0m ")
+                print('\033[1m==================================================================\n\033[0m')
 
                 if g[0].getH(fim) > 0: #so vamos ir ao nodo fim se ainda esta disponivel
                     if posiçõesAtuais["Avião"] != None: resAviao = g[0].greedy(posiçõesAtuais["Avião"], fim)
@@ -240,31 +312,36 @@ def main():
                     check = False
                 
                 else:
-                    print('==================================================================')
-                    print("Não se encontra disponível a cidade que pretende alcançar.")
+                    print('\033[1m==================================================================\033[0m')
+                    print("A cidade que pretende alcançar não se encontra disponível.")
                     print("Insira um novo destino")
-                    print('==================================================================\n')
+                    print('\033[1m==================================================================\n\033[0m')
 
-            (melhor_path, melhor_custo, melhor_vehiculo) = selection.selecionaTheBest(resAviao, resCarro, resBarco, aviao, carro, barco, recursos, heuristicas)
+            (melhor_path, melhor_custo, recursosgastos, melhor_vehiculo) = selection.selecionaTheBest(GasolinaComoCriterioDeDecisao, resAviao, resCarro, resBarco, aviao, carro, barco, recursosDeCadaCidade, heuristicas)
         
 
         else:
-            print('==================================================================')
+            print('\033[1m==================================================================\033[0m')
             print("Não foi selecionada uma opção válida")
-            print('==================================================================\n')
+            print('\033[1m==================================================================\n\033[0m')
 
-            sleep(0.5)
+            sleep(0.1)
         
         ##response##
 
-        if saida == 7 or saida == 8 or saida == 9 or saida == 10:
+        if saida >= 9 and saida <= 12:
             if melhor_path:
 
-                print('==================================================================')
-                print("O melhor veículo para esta viagem é o [", melhor_vehiculo, "]")
+                GasolinaDisponivel -= melhor_custo
+                RecursosDisponiveis -= recursosgastos
+
+                print('\033[1m==================================================================\033[0m')
+                print("O melhor veículo para esta viagem é o \033[1m[", melhor_vehiculo, "]\033[0m\n")
+                print("{Recursos Distribuídos:\033[1m", recursosgastos, "\033[0m}")
+                print("{Gasolina Gasta:\033[1m", melhor_custo, "\033[0m}")
                 print("\nCaminho solução")
                 print(melhor_path)
-                print('==================================================================\n')
+                print('\033[1m==================================================================\n\033[0m')
 
 
                 #ja foi atualizado a gasolina/capacidade do vehiculo
@@ -273,19 +350,19 @@ def main():
 
 
             else:
-                print('==================================================================')
+                print('\033[1m==================================================================\033[0m')
                 print("De momento não é possível percorrer a viagem inserida.")
-                print("Nenhum dos veículos possuem gasolina suficiente para")
+                print("Nenhum dos veículos possui \033[1mgasolina suficiente\033[0m para")
                 print("efetuar o melhor caminho determinado.\n")
-                print("Serão restaurados os recursos e gasolina dos veículos")
-                print('==================================================================')
+                print("\033[1mSerão restaurados os recursos e gasolina dos veículos\033[0m")
+                print('\033[1m==================================================================\033[0m\n')
 
-                aviao.restauraRecursos()
-                aviao.restauraGasolina()
-                carro.restauraRecursos()
-                carro.restauraGasolina()
-                barco.restauraRecursos()
-                barco.restauraGasolina()
+                RecursosDisponiveis -= aviao.restauraRecursos(RecursosDisponiveis)
+                GasolinaDisponivel -= aviao.restauraGasolina(GasolinaDisponivel)
+                RecursosDisponiveis -= carro.restauraRecursos(RecursosDisponiveis)
+                GasolinaDisponivel -= carro.restauraGasolina(GasolinaDisponivel)
+                RecursosDisponiveis -= barco.restauraRecursos(RecursosDisponiveis)
+                GasolinaDisponivel -= barco.restauraGasolina(GasolinaDisponivel)
 
 
             
@@ -293,37 +370,37 @@ def main():
                 posiçõesAtuais[melhor_vehiculo] = fim
                 #print(posiçõesAtuais[melhor_vehiculo])
 
-            #diminuir heuristica/tempo de vida das cidades no visitadas
+            #diminuir heuristica/Tempo de vida das cidades no visitadas
             g[0].decrement_life(cidadesVisitadas)
             g[1].decrement_life(cidadesVisitadas)
             g[2].decrement_life(cidadesVisitadas)
 
-            #informar do novo tempo de vida das cidades
+            #informar do novo Tempo de vida das cidades
 
-            print('==================================================================')
-            print("Novos tempos de vida das cidades")
+            print('\033[1m==================================================================\033[0m')
+            print("\033[1mNovos Tempos de Vida das cidades\033[0m")
             print(g[0].m_h)
-            print('==================================================================\n')
+            print('\033[1m==================================================================\n\033[0m')
 
 
-            #é suposto o vehiculo ficar na cidade objetivo (oseja que esse vai ser o proximo nodo inicial para ele)
+            #é suposto o vehiculo ficar na cidade objetivo (oseja que esse vai ser o proximo Nodo Inicial para ele)
             if melhor_vehiculo:
-                print('==================================================================')
-                print("Nodo inicial para a proxima viagem do", melhor_vehiculo, ": ", fim)
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                print("Nodo Inicial para a próxima viagem do\033[1m",melhor_vehiculo,"\033[0m:\033[1m",fim,"\033[0m")
+                print('\033[1m==================================================================\n\033[0m')
 
             #evento aleatorio
             check, nodoA, nodoB = g[0].eventoAleatorio()
             if check:
                 g[1].atualizaEvento(nodoA, nodoB)
                 g[2].atualizaEvento(nodoA, nodoB)
-                print('==================================================================')
-                print("Aconteceu um evento entre", nodoA, "e", nodoB)
-                print('==================================================================\n')
+                print('\033[1m==================================================================\033[0m')
+                print("Aconteceu um evento entre\033[1m", nodoA, "\033[0me\033[1m", nodoB, "\033[0m")
+                print('\033[1m==================================================================\n\033[0m')
 
                 #print(g[0].m_graph)
         
-        sleep(0.5)
+        sleep(0.1)
 
 
 if __name__ == "__main__":
