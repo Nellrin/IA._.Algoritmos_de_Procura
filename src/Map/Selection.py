@@ -18,8 +18,6 @@ class Selection:
 
         caminhoOrdenadoPorHeuristica.sort(key=lambda cidade: dictH.get(cidade))
         caminhoOrdenadoPorHeuristica.insert(0,destino)
-
-        print(f"Recursos: {recursos}")
         
         for cidade in caminhoOrdenadoPorHeuristica:
             if (totalRec + recursos[cidade]) < recursosDisponiveis:
