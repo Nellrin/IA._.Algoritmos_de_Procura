@@ -24,7 +24,6 @@ def greedy(self, start, end):
                 n = v
 
         if n == None:
-            print('Path does not exist!')
             return None
 
         # se o nodo corrente é o destino
@@ -56,5 +55,4 @@ def greedy(self, start, end):
         open_list.remove(n)
         closed_list.add(n)
 
-    print('Path does not exist!')
     return None

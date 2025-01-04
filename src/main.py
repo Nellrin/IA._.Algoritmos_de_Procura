@@ -52,14 +52,11 @@ def main():
     numAleatorio = random.randint(0, 2)
 
     #escolhemos o clima
+    numAleatorio = 2
     match numAleatorio:
-        case 0:
-            g = gBasico
-        case 1:
-            g = gRegular
-        case 2:
-            g = gExtremo
-
+        case 0:g = gBasico
+        case 1:g = gRegular
+        case 2:g = gExtremo
 
     GasolinaDisponivel = 300
     RecursosDisponiveis = 200
@@ -80,6 +77,7 @@ def main():
     }
 
     GasolinaComoCriterioDeDecisao = True
+    clear()
 
     saida = -1
     while saida != 0:
@@ -109,6 +107,10 @@ def main():
             print('\033[1m==================================================================\033[0m')
             print("Saindo...")
             print('\033[1m==================================================================\n\033[0m')
+
+            sleep(0.2)
+            clear()
+
         elif saida == 1:
             print('\033[1m==================================================================\033[0m')
             print('\033[1mOrigem\033[0m: [(\033[1mVizinho1\033[0m, \033[1mCusto1\033[0m), ... , (\033[1mVizinhoN\033[0m, \033[1mCustoN\033[0m)]\n')
@@ -175,14 +177,14 @@ def main():
                 elif g[0].m_h[cidades] == 5:      listaTiposDeCidadesEmRisco[6] += 1
 
             print('\033[1m==================================================================\033[0m')
-            print(f"Avião {{Recursos:\033[1m[{aviao.getRecursos()}/{aviao.getRecursosMAX()}]\033[0m   \033[1m({((100*aviao.getRecursos())/aviao.getRecursosMAX()):.2f}%)\033[0m}}")
-            print(f"      {{Gasolina:\033[1m[{aviao.getGasolina()}/{aviao.getGasolinaMAX()}]\033[0m   \033[1m({((100*aviao.getGasolina())/aviao.getGasolinaMAX()):.2f}%)\033[0m}}")
-            print(f"Barco {{Recursos:\033[1m[{barco.getRecursos()}/{barco.getRecursosMAX()}]\033[0m   \033[1m({((100*barco.getRecursos())/barco.getRecursosMAX()):.2f}%)\033[0m}}")
-            print(f"      {{Gasolina:\033[1m[{barco.getGasolina()}/{barco.getGasolinaMAX()}]\033[0m   \033[1m({((100*barco.getGasolina())/barco.getGasolinaMAX()):.2f}%)\033[0m}}")
-            print(f"Carro {{Recursos:\033[1m[{carro.getRecursos()}/{carro.getRecursosMAX()}]\033[0m   \033[1m({((100*carro.getRecursos())/carro.getRecursosMAX()):.2f}%)\033[0m}}")
-            print(f"      {{Gasolina:\033[1m[{carro.getGasolina()}/{carro.getGasolinaMAX()}]\033[0m   \033[1m({((100*carro.getGasolina())/carro.getGasolinaMAX()):.2f}%)\033[0m}}\n\n")
+            print(f"Avião {{Recursos:   \033[1m[{aviao.getRecursos()}/{aviao.getRecursosMAX()}]\033[0m   \033[1m({((100*aviao.getRecursos())/aviao.getRecursosMAX()):.2f}%)\033[0m}}")
+            print(f"      {{Combustível:\033[1m[{aviao.getGasolina()}/{aviao.getGasolinaMAX()}]\033[0m   \033[1m({((100*aviao.getGasolina())/aviao.getGasolinaMAX()):.2f}%)\033[0m}}")
+            print(f"Barco {{Recursos:   \033[1m[{barco.getRecursos()}/{barco.getRecursosMAX()}]\033[0m   \033[1m({((100*barco.getRecursos())/barco.getRecursosMAX()):.2f}%)\033[0m}}")
+            print(f"      {{Combustível:\033[1m[{barco.getGasolina()}/{barco.getGasolinaMAX()}]\033[0m   \033[1m({((100*barco.getGasolina())/barco.getGasolinaMAX()):.2f}%)\033[0m}}")
+            print(f"Carro {{Recursos:   \033[1m[{carro.getRecursos()}/{carro.getRecursosMAX()}]\033[0m   \033[1m({((100*carro.getRecursos())/carro.getRecursosMAX()):.2f}%)\033[0m}}")
+            print(f"      {{Combustível:\033[1m[{carro.getGasolina()}/{carro.getGasolinaMAX()}]\033[0m   \033[1m({((100*carro.getGasolina())/carro.getGasolinaMAX()):.2f}%)\033[0m}}\n\n")
             print(f"                Recursos Disponíveis: \033[1m[{RecursosDisponiveis}/{RecursosInicial}]\033[0m   \033[1m({((100*RecursosDisponiveis)/RecursosInicial):.2f}%)\033[0m")
-            print(f"                 Gasolina Disponível: \033[1m[{GasolinaDisponivel}/{GasolinaInicial}]\033[0m   \033[1m({((100*GasolinaDisponivel)/GasolinaInicial):.2f}%)\033[0m\n")
+            print(f"              Combustível Disponível: \033[1m[{GasolinaDisponivel}/{GasolinaInicial}]\033[0m   \033[1m({((100*GasolinaDisponivel)/GasolinaInicial):.2f}%)\033[0m\n")
             print(f"     Recursos Requisitados Entregues: \033[1m[{recursosAtendidos}/{recursosPedidosInicialmente}]\033[0m   \033[1m({((100*recursosAtendidos)/recursosPedidosInicialmente):.2f}%)\033[0m")
             print(f"                  Cidades Socorridas: \033[1m[{listaTiposDeCidadesEmRisco[1]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[1]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m")
             print(f"                    Cidades Perdidas: \033[1m[{listaTiposDeCidadesEmRisco[2]}/{listaTiposDeCidadesEmRisco[0]}]\033[0m   \033[1m({(100*listaTiposDeCidadesEmRisco[2]/listaTiposDeCidadesEmRisco[0]):.2f}%)\033[0m\n")
@@ -196,7 +198,7 @@ def main():
 
         elif saida == 8:
 
-            opcaoGasolina = "(1) Menor quantidade de Gasolina Gasta"
+            opcaoGasolina = "(1) Menor quantidade de Combustível Gasto"
             opcaoRecursos = "(2) Maior quantidade de Recursos Distribuidos"
 
             if GasolinaComoCriterioDeDecisao: opcaoGasolina = f"\033[1m{opcaoGasolina}\033[0m"
@@ -288,7 +290,6 @@ def main():
                     if posiçõesAtuais["Avião"] != None: resAviao = g[0].procura_aStar(posiçõesAtuais["Avião"], fim)
                     else: resAviao = g[0].procura_aStar(inicio, fim)
 
-
                     if posiçõesAtuais["Carro"] != None: resCarro = g[1].procura_aStar(posiçõesAtuais["Carro"], fim)
                     else: resCarro = g[1].procura_aStar(inicio, fim)
                     
@@ -365,7 +366,7 @@ def main():
                 print('\033[1m==================================================================\033[0m')
                 print("O melhor veículo para esta viagem é o \033[1m[", melhor_vehiculo, "]\033[0m\n")
                 print("{Recursos Distribuídos:\033[1m", recursosgastos, "\033[0m}")
-                print("{Gasolina Gasta:\033[1m", melhor_custo, "\033[0m}")
+                print("{Combustível Gasto:\033[1m", melhor_custo, "\033[0m}")
                 print("\nCaminho solução")
                 print(melhor_path)
                 print('\033[1m==================================================================\n\033[0m')
@@ -379,9 +380,9 @@ def main():
             else:
                 print('\033[1m==================================================================\033[0m')
                 print("De momento não é possível percorrer a viagem inserida.")
-                print("Nenhum dos veículos possui \033[1mgasolina suficiente\033[0m para")
+                print("Nenhum dos veículos possui\033[1m combustível suficiente\033[0m para")
                 print("efetuar o melhor caminho determinado.\n")
-                print("\033[1mSerão restaurados os recursos e gasolina dos veículos\033[0m")
+                print("\033[1mSerão restaurados os recursos e combustível dos veículos\033[0m")
                 print('\033[1m==================================================================\033[0m\n')
 
                 RecursosDisponiveis -= aviao.restauraRecursos(RecursosDisponiveis)

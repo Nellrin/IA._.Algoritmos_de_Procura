@@ -34,7 +34,6 @@ def procura_aStar(self, start, end):
             min_estima = self.calcula_est(calc_heurist)
             n = min_estima
         if n == None:
-            print('Path does not exist!')
             return None
 
         # if the current node is the stop_node
@@ -79,5 +78,4 @@ def procura_aStar(self, start, end):
         open_list.remove(n)
         closed_list.add(n)
 
-    print('Path does not exist!')
     return None
