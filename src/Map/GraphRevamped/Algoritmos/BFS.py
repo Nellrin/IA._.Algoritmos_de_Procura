@@ -42,6 +42,7 @@ def procura_BFS(self, start, end):
             path.append(parent[end])
             end = parent[end]
         path.reverse()
+
         # funçao calcula custo caminho
         custo = self.calcula_custo(path)
         return (path, custo)

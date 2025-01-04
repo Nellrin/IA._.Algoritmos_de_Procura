@@ -63,6 +63,7 @@ class Selection:
         if resAviao is not None:
             path_aviao, custo_aviao = resAviao
             recursosGastos = self.recursosUsados(False,path_aviao, recursos, aviao.getRecursos(),temposDeVida)
+
             if custo_aviao <= aviao.getGasolina() and ((GasolinaComoPrioridade and custo_aviao < melhor_custo) or (not GasolinaComoPrioridade and recursosGastos > recursosGastosMAX)):
                 recursosGastosMAX = recursosGastos
                 melhor_path = path_aviao
@@ -72,6 +73,7 @@ class Selection:
         if resCarro is not None:
             path_carro, custo_carro = resCarro
             recursosGastos = self.recursosUsados(False,path_carro, recursos, carro.getRecursos(),temposDeVida)
+    
             if custo_carro <= carro.getGasolina() and ((GasolinaComoPrioridade and custo_carro < melhor_custo) or (not GasolinaComoPrioridade and recursosGastos > recursosGastosMAX)):
                 recursosGastosMAX = recursosGastos
                 melhor_path = path_carro
