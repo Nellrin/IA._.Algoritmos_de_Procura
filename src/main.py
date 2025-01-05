@@ -52,7 +52,6 @@ def main():
     numAleatorio = random.randint(0, 2)
 
     #escolhemos o clima
-    numAleatorio = 2
     match numAleatorio:
         case 0:g = gBasico
         case 1:g = gRegular
